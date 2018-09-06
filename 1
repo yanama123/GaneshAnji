@@ -1,0 +1,19 @@
+#! /bin/sh
+
+
+SETFET=$(cat setup.py | grep -i version)
+echo $SETFET
+
+R=$(echo $SETFET | grep -Eo '[+-]?[0-9]+([.][0-9]+[.][0-9])?')
+#echo $SETFET | awk -F'=' '{print $2}'
+
+#sed -n 's/.*id=\([0-9]*\).*/\1/p' -- setup.py
+
+#RESULTT=$(egrep  -o  "([0-9]{1,}\.)+[0-9]{1,}" SETFET)
+#echo $RESULTT
+
+projectname1='middleware_service-'
+version1=$R
+tar1='.tar.gz'
+REQ_URL1=$projectname1$version1$tar1
+echo $REQ_URL1
