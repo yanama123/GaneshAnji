@@ -4,7 +4,7 @@
 
 ### Clone Repo
 
-    $ git clone git@github.emcrubicon.com:AAI/middlewareservice.git
+    $ git clone https://github.com/yanama123/Python_Automation.git
 
 ### Python Virtual Environment
 
