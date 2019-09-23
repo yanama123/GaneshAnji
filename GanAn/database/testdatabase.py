@@ -4,7 +4,8 @@ import sqlite3
 class TestsDatabase:
     def __init__(self):
         print("Came to init")
-        self.conn = sqlite3.connect('testnew.db')
+        self.conn = sqlite3.connect('results.db')
+        print('connecyed')
         # self.conn = sqlite3.connect(':memory:')
         self.c = self.conn.cursor()
 
@@ -22,9 +23,20 @@ class TestsDatabase:
 
         except sqlite3.OperationalError as e:
             pass
-            # print("Couldn't create Employee table due to '{}'".format(e))
 
-    def addTestResults(self, id, environment, test, crated_at, started_at, finished_at, status, logs):
+    def add_test_results(self, id, environment, test, crated_at, started_at, finished_at, status, logs):
+        """
+
+        :param id:
+        :param environment:
+        :param test:
+        :param crated_at:
+        :param started_at:
+        :param finished_at:
+        :param status:
+        :param logs:
+        :return:
+        """
         self.id = id
         self.environment = environment
         self.test = test
@@ -42,7 +54,15 @@ class TestsDatabase:
             print("Failed to Insert the element due to - {}".format(e))
         self.conn.commit()
 
-    def updatetestresults(self, id, finished_at, status, logs):
+    def update_test_results(self, id, finished_at, status, logs):
+        """
+
+        :param id:
+        :param finished_at:
+        :param status:
+        :param logs:
+        :return:
+        """
         try:
             self.c.execute(
                 "UPDATE testresults SET finished_at='{}',status='{}',logs='{}' WHERE id='{}'".format(finished_at,
@@ -51,29 +71,24 @@ class TestsDatabase:
         except Exception as e:
             print(e.message)
 
-    def getstatus(self, id):
-        status = self.c.execute("SELECT status FROM testresults WHERE id= '{}'".format(id)).fetchone()
-        print(status)
+    def get_status(self, id):
+        """
+
+        :param id:
+        :return:
+        """
+        status = self.c.execute("SELECT status FROM testresults WHERE id= '{}'".format(id)).fetchall()
         return status
 
     def display(self):
-        # print("{}".format(self.c.execute("""SELECT * FROM employees""")))
+        """
+
+        :return:
+        """
         result = self.c.execute("""SELECT * FROM testresults""").fetchall()
-        # print(result)
         return result
-        # print(self.c.fetchall())
 
     def __del__(self):
         self.conn.commit()
         self.conn.close()
 
-# if __name__ == '__main__':
-# test = TestsDatabase()
-# test.addTestResults('testcase1','venv','test','1pm','2pm','3pm', 'Inprogress', 'Dumylog')
-##test.display()
-# test.updateSalaryDetails('testcase1','3pm', 'completed', 'Dummy success' )
-# test.display()
-# test.addTestResults('testcase1', 'venv', 'test2', '1pm22', '2pm22', '3pm', 'Inprogress', 'Dumy2222log')
-# test.updateSalaryDetails('testcase1', '3pm', 'completed', 'Dummy success')
-# test.getstatus('testcase1')
-# test.display()
